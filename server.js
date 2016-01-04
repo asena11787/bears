@@ -11,6 +11,11 @@ var mongoose	= require('mongoose');
 //mongoose.connect('mongodb://asena11787:Sh@w@ngunks1@ds056698.mongolab.com:56698/bears'); // connect to our database
 mongoose.connect('mongodb://localhost/bears'); // connect to our database
 var Bear 		= require('./app/models/bear');
+var path        = require('path');
+
+// Set the  view enjine to EJS
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
 
 // configure app to use bodyParser()
 // this will let us get the data from a post
@@ -32,9 +37,9 @@ router.use(function(req, res, next) {
 
 // test route to make sure everything is working
 // accessed at GET http://localhost:8080/api
-router.get('/', function(req, res) {
-	res.json({ message: 'hooray! welcome to our api!'});
-});
+//router.get('/', function(req, res) {
+//	res.render('index', { title: 'hooray! welcome to our api!'});
+//});
 
 // more routes for our api will happen here
 
@@ -64,7 +69,11 @@ router.route('/bears')
             if (err)
                 res.send(err);
 
-            res.json(bears);
+            // res.json(bears);
+            res.render('index', {
+            	bears: bears,
+            	title: 'Hello Jerry!'
+            });
         });
     });
 
